@@ -27,3 +27,5 @@ export const getDB = () => {
   }
   return db;
 };
+
+export default connectDB;
