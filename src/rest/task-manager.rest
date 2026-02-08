@@ -8,7 +8,7 @@ POST {{baseUrl}}/api/categories
 Content-Type: application/json
 
 {
-  "name": "Work"
+  "name": "Home"
 }
 
 ### List tasks
@@ -20,8 +20,8 @@ POST {{baseUrl}}/api/tasks
 Content-Type: application/json
 
 {
-  "title": "Finish report",
-  "description": "Draft the quarterly report",
-  "categoryId": "698810a0e5d9c27ee948251b",
+  "title": "Make bed",
+  "description": "Make the bed neatly",
+  "categoryId": "69881807c72a2298cb7d44f1",
   "isCompleted": false
 }
