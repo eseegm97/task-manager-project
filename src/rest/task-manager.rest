@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:3000
+
+### List categories
+GET {{baseUrl}}/api/categories
+
+### Create category
+POST {{baseUrl}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "Work"
+}
+
+### List tasks
+GET {{baseUrl}}/api/tasks
+
+### Create task
+# Replace "<categoryId>" with a real category id from the create/list response.
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Finish report",
+  "description": "Draft the quarterly report",
+  "categoryId": "698810a0e5d9c27ee948251b",
+  "isCompleted": false
+}
