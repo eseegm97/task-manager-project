@@ -8,7 +8,8 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "swagger": "node src/docs/swagger.js"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +29,8 @@
     "eslint-plugin-node": "^11.1.0",
     "globals": "^17.3.0",
     "nodemon": "^3.1.11",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "swagger-autogen": "^2.23.7"
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
