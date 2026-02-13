@@ -30,3 +30,18 @@ export const categoryExists = async (id) => {
   );
   return count > 0;
 };
+
+export const updateCategory = async (id, updateDoc) => {
+  const result = await collection().findOneAndUpdate(
+    { _id: new ObjectId(id) },
+    updateDoc,
+    { returnDocument: 'after' }
+  );
+
+  return result.value;
+};
+
+export const deleteCategory = async (id) => {
+  const result = await collection().deleteOne({ _id: new ObjectId(id) });
+  return result.deletedCount > 0;
+};

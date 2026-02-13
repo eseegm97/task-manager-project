@@ -1,4 +1,6 @@
 @baseUrl = http://localhost:3000
+@categoryId = 69881807c72a2298cb7d44f1
+@taskId = 698bd4937224a298f4aebb74
 
 ### List categories
 GET {{baseUrl}}/api/categories
@@ -11,11 +13,21 @@ Content-Type: application/json
   "name": "Home"
 }
 
+### Update category
+PUT {{baseUrl}}/api/categories/{{categoryId}}
+Content-Type: application/json
+
+{
+  "name": "School"
+}
+
+### Delete category
+DELETE {{baseUrl}}/api/categories/{{categoryId}}
+
 ### List tasks
 GET {{baseUrl}}/api/tasks
 
 ### Create task
-# Replace "<categoryId>" with a real category id from the create/list response.
 POST {{baseUrl}}/api/tasks
 Content-Type: application/json
 
@@ -25,3 +37,16 @@ Content-Type: application/json
   "categoryId": "69881807c72a2298cb7d44f1",
   "isCompleted": false
 }
+
+### Update task
+PUT {{baseUrl}}/api/tasks/{{taskId}}
+Content-Type: application/json
+
+{
+  "title": "Make bed (Updated)",
+  "description": "Tidy and straighten sheets",
+  "isCompleted": true
+}
+
+### Delete task
+DELETE {{baseUrl}}/api/tasks/{{taskId}}

@@ -29,3 +29,18 @@ export const createTask = async ({
 export const getTasks = async () => {
   return collection().find({}).sort({ createdAt: -1 }).toArray();
 };
+
+export const updateTask = async (id, updateDoc) => {
+  const result = await collection().findOneAndUpdate(
+    { _id: new ObjectId(id) },
+    updateDoc,
+    { returnDocument: 'after' }
+  );
+
+  return result.value;
+};
+
+export const deleteTask = async (id) => {
+  const result = await collection().deleteOne({ _id: new ObjectId(id) });
+  return result.deletedCount > 0;
+};
