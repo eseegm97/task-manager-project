@@ -12,6 +12,44 @@ const doc = {
     description: 'API documentation for the Task Manager project.',
     version: '1.0.0'
   },
+  components: {
+    schemas: {
+      ValidationError: {
+        type: 'object',
+        properties: {
+          message: {
+            type: 'string',
+            example: 'Validation failed.'
+          },
+          errors: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                field: {
+                  type: 'string',
+                  example: 'title'
+                },
+                message: {
+                  type: 'string',
+                  example: 'Title is required.'
+                }
+              }
+            }
+          }
+        }
+      },
+      NotFoundError: {
+        type: 'object',
+        properties: {
+          message: {
+            type: 'string',
+            example: 'Resource not found.'
+          }
+        }
+      }
+    }
+  },
   host: 'localhost:3000',
   schemes: ['http']
 };

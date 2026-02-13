@@ -5,6 +5,12 @@ import {
   listCategories,
   removeCategory
 } from '../controllers/categoryController.js';
+import { handleValidationErrors } from '../middlewares/validation.js';
+import {
+  categoryCreateValidator,
+  categoryIdParamValidator,
+  categoryUpdateValidator
+} from '../middlewares/validators.js';
 
 const router = Router();
 
@@ -38,9 +44,13 @@ const router = Router();
  *         description: The created category
  *       400:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  */
 router.get('/', listCategories);
-router.post('/', addCategory);
+router.post('/', categoryCreateValidator, handleValidationErrors, addCategory);
 
 /**
  * @openapi
@@ -71,8 +81,16 @@ router.post('/', addCategory);
  *         description: The updated category
  *       400:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  *       404:
  *         description: Category not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
  *   delete:
  *     summary: Delete a category
  *     tags:
@@ -88,10 +106,24 @@ router.post('/', addCategory);
  *         description: Category deleted
  *       400:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  *       404:
  *         description: Category not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
  */
-router.put('/:id', editCategory);
-router.delete('/:id', removeCategory);
+router.put(
+  '/:id',
+  categoryIdParamValidator,
+  categoryUpdateValidator,
+  handleValidationErrors,
+  editCategory
+);
+router.delete('/:id', categoryIdParamValidator, handleValidationErrors, removeCategory);
 
 export default router;

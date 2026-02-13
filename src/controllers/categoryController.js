@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import {
   createCategory,
   deleteCategory,
@@ -19,11 +18,7 @@ export const addCategory = async (req, res, next) => {
   try {
     const { name } = req.body;
 
-    if (!name || typeof name !== 'string' || !name.trim()) {
-      return res.status(400).json({ message: 'Name is required.' });
-    }
-
-    const category = await createCategory({ name: name.trim() });
+    const category = await createCategory({ name });
     res.status(201).json(category);
   } catch (error) {
     next(error);
@@ -35,23 +30,9 @@ export const editCategory = async (req, res, next) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    if (!ObjectId.isValid(id)) {
-      return res
-        .status(400)
-        .json({ message: 'Category id must be a valid ObjectId.' });
-    }
-
-    if (name === undefined) {
-      return res.status(400).json({ message: 'Name is required.' });
-    }
-
-    if (typeof name !== 'string' || !name.trim()) {
-      return res.status(400).json({ message: 'Name must be a non-empty string.' });
-    }
-
     const updateDoc = {
       $set: {
-        name: name.trim(),
+        name,
         updatedAt: new Date()
       }
     };
@@ -70,12 +51,6 @@ export const editCategory = async (req, res, next) => {
 export const removeCategory = async (req, res, next) => {
   try {
     const { id } = req.params;
-
-    if (!ObjectId.isValid(id)) {
-      return res
-        .status(400)
-        .json({ message: 'Category id must be a valid ObjectId.' });
-    }
 
     const deleted = await deleteCategory(id);
     if (!deleted) {

@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000
-@categoryId = 69881807c72a2298cb7d44f1
+@categoryId = 69881089e5d9c27ee948251a
 @taskId = 698bd4937224a298f4aebb74
 
 ### List categories
@@ -10,7 +10,7 @@ POST {{baseUrl}}/api/categories
 Content-Type: application/json
 
 {
-  "name": "Home"
+  "name": "School"
 }
 
 ### Update category

@@ -1,5 +1,11 @@
 import { Router } from 'express';
 import { addTask, editTask, listTasks, removeTask } from '../controllers/taskController.js';
+import { handleValidationErrors } from '../middlewares/validation.js';
+import {
+	taskCreateValidator,
+	taskIdParamValidator,
+	taskUpdateValidator
+} from '../middlewares/validators.js';
 
 const router = Router();
 
@@ -39,11 +45,19 @@ const router = Router();
  *         description: The created task
  *       400:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  *       404:
  *         description: Category not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
  */
 router.get('/', listTasks);
-router.post('/', addTask);
+router.post('/', taskCreateValidator, handleValidationErrors, addTask);
 
 /**
  * @openapi
@@ -78,8 +92,16 @@ router.post('/', addTask);
  *         description: The updated task
  *       400:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  *       404:
  *         description: Task or category not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
  *   delete:
  *     summary: Delete a task
  *     tags:
@@ -95,10 +117,24 @@ router.post('/', addTask);
  *         description: Task deleted
  *       400:
  *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  *       404:
  *         description: Task not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NotFoundError'
  */
-router.put('/:id', editTask);
-router.delete('/:id', removeTask);
+router.put(
+	'/:id',
+	taskIdParamValidator,
+	taskUpdateValidator,
+	handleValidationErrors,
+	editTask
+);
+router.delete('/:id', taskIdParamValidator, handleValidationErrors, removeTask);
 
 export default router;
