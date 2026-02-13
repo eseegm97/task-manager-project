@@ -5,6 +5,7 @@ import {
   listCategories,
   removeCategory
 } from '../controllers/categoryController.js';
+import asyncHandler from '../middlewares/asyncHandler.js';
 import { handleValidationErrors } from '../middlewares/validation.js';
 import {
   categoryCreateValidator,
@@ -49,8 +50,13 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ValidationError'
  */
-router.get('/', listCategories);
-router.post('/', categoryCreateValidator, handleValidationErrors, addCategory);
+router.get('/', asyncHandler(listCategories));
+router.post(
+  '/',
+  categoryCreateValidator,
+  handleValidationErrors,
+  asyncHandler(addCategory)
+);
 
 /**
  * @openapi
@@ -122,8 +128,13 @@ router.put(
   categoryIdParamValidator,
   categoryUpdateValidator,
   handleValidationErrors,
-  editCategory
+  asyncHandler(editCategory)
 );
-router.delete('/:id', categoryIdParamValidator, handleValidationErrors, removeCategory);
+router.delete(
+  '/:id',
+  categoryIdParamValidator,
+  handleValidationErrors,
+  asyncHandler(removeCategory)
+);
 
 export default router;

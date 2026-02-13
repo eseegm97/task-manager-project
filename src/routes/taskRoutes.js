@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { addTask, editTask, listTasks, removeTask } from '../controllers/taskController.js';
+import asyncHandler from '../middlewares/asyncHandler.js';
 import { handleValidationErrors } from '../middlewares/validation.js';
 import {
 	taskCreateValidator,
@@ -56,8 +57,8 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/NotFoundError'
  */
-router.get('/', listTasks);
-router.post('/', taskCreateValidator, handleValidationErrors, addTask);
+router.get('/', asyncHandler(listTasks));
+router.post('/', taskCreateValidator, handleValidationErrors, asyncHandler(addTask));
 
 /**
  * @openapi
@@ -133,8 +134,13 @@ router.put(
 	taskIdParamValidator,
 	taskUpdateValidator,
 	handleValidationErrors,
-	editTask
+	asyncHandler(editTask)
 );
-router.delete('/:id', taskIdParamValidator, handleValidationErrors, removeTask);
+router.delete(
+	'/:id',
+	taskIdParamValidator,
+	handleValidationErrors,
+	asyncHandler(removeTask)
+);
 
 export default router;
