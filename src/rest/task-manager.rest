@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
-@categoryId = 69881089e5d9c27ee948251a
-@taskId = 698bd4937224a298f4aebb74
+@categoryId = 698ea1788f0b1838ceb9ae71
+@taskId = 698ea2058f0b1838ceb9ae72
 
 ### List categories
 GET {{baseUrl}}/api/categories
@@ -10,7 +10,7 @@ POST {{baseUrl}}/api/categories
 Content-Type: application/json
 
 {
-  "name": "School"
+  "name": "Home"
 }
 
 ### Update category
@@ -18,7 +18,7 @@ PUT {{baseUrl}}/api/categories/{{categoryId}}
 Content-Type: application/json
 
 {
-  "name": "School"
+  "name": "Church"
 }
 
 ### Delete category
@@ -34,7 +34,7 @@ Content-Type: application/json
 {
   "title": "Make bed",
   "description": "Make the bed neatly",
-  "categoryId": "69881807c72a2298cb7d44f1",
+  "categoryId": "698e98c42942c5ae0ccb96ff",
   "isCompleted": false
 }
 
@@ -43,8 +43,8 @@ PUT {{baseUrl}}/api/tasks/{{taskId}}
 Content-Type: application/json
 
 {
-  "title": "Make bed (Updated)",
-  "description": "Tidy and straighten sheets",
+  "title": "Pack lunch",
+  "description": "Pack your lunch for tomorrow",
   "isCompleted": true
 }
 
