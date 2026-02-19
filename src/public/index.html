@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="api-base" content="http://localhost:3000" />
+    <title>Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="glow glow-left"></div>
+    <div class="glow glow-right"></div>
+
+    <header class="hero">
+      <p class="eyebrow">Task Manager</p>
+      <h1>Ship focus, not chaos.</h1>
+      <p class="lead">
+        A clean control room for your tasks and categories. Build, filter, and
+        finish with confidence.
+      </p>
+      <div class="hero-actions">
+        <button class="button primary" id="reload-button" type="button">
+          Refresh data
+        </button>
+        <span class="status" id="status-text">Ready.</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Tasks</h2>
+          <div class="filter">
+            <label for="task-filter">Filter</label>
+            <select id="task-filter"></select>
+          </div>
+        </div>
+
+        <form class="form" id="task-form">
+          <input type="hidden" id="task-id" />
+          <div class="field">
+            <label for="task-title">Title</label>
+            <input id="task-title" name="title" type="text" required />
+          </div>
+          <div class="field">
+            <label for="task-description">Description</label>
+            <textarea id="task-description" name="description" rows="3"></textarea>
+          </div>
+          <div class="field-group">
+            <div class="field">
+              <label for="task-category">Category</label>
+              <select id="task-category" name="categoryId"></select>
+            </div>
+            <div class="field field-inline">
+              <label class="checkbox">
+                <input id="task-complete" type="checkbox" />
+                <span>Completed</span>
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="button primary" type="submit" id="task-submit">
+              Save task
+            </button>
+            <button class="button ghost" type="button" id="task-reset">
+              Reset
+            </button>
+          </div>
+        </form>
+
+        <div class="list" id="task-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Categories</h2>
+          <p class="hint">Group work by theme and keep tasks aligned.</p>
+        </div>
+
+        <form class="form" id="category-form">
+          <input type="hidden" id="category-id" />
+          <div class="field">
+            <label for="category-name">Name</label>
+            <input id="category-name" name="name" type="text" required />
+          </div>
+          <div class="form-actions">
+            <button class="button primary" type="submit" id="category-submit">
+              Save category
+            </button>
+            <button class="button ghost" type="button" id="category-reset">
+              Reset
+            </button>
+          </div>
+        </form>
+
+        <div class="list" id="category-list"></div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

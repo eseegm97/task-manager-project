@@ -1,4 +1,6 @@
 import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
@@ -10,11 +12,15 @@ const swaggerSpec = JSON.parse(
 );
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const publicDir = path.join(__dirname, 'public');
 
 app.use(express.json());
+app.use(express.static(publicDir));
 
 app.get('/', (req, res) => {
-	res.json({ message: 'Task Manager API' });
+	res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
