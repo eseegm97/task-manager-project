@@ -97,6 +97,64 @@ body {
   gap: 32px;
 }
 
+.auth-layout {
+  padding: 0 7vw 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 32px;
+  align-items: stretch;
+}
+
+.auth-layout.single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 720px;
+}
+
+.auth-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 16px;
+  animation: rise 420ms ease-out;
+}
+
+.auth-card.subtle {
+  background: rgba(255, 255, 255, 0.7);
+  border-style: dashed;
+}
+
+.auth-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.auth-list {
+  display: grid;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(31, 122, 122, 0.12);
+  color: var(--accent-2);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -303,6 +361,10 @@ body {
 
 @media (max-width: 960px) {
   .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-layout {
     grid-template-columns: 1fr;
   }
 

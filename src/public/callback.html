@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="api-base" content="https://task-manager-project-loio.onrender.com" />
+    <title>Task Manager | Connecting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="glow glow-left"></div>
+    <div class="glow glow-right"></div>
+
+    <main class="auth-layout single">
+      <section class="auth-card">
+        <span class="badge">Signing you in</span>
+        <h1 class="auth-title">Almost there</h1>
+        <p class="lead">
+          Hang tight while we secure your session and load your workspace.
+        </p>
+        <p class="status" id="callback-status">Starting sign-in...</p>
+      </section>
+    </main>
+
+    <script src="/callback.js" type="module"></script>
+  </body>
+</html>

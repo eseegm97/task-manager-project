@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="api-base" content="https://task-manager-project-loio.onrender.com" />
-    <title>Task Manager</title>
+    <title>Task Manager | Sign In</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,92 +19,38 @@
 
     <header class="hero">
       <p class="eyebrow">Task Manager</p>
-      <h1>Ship focus, not chaos.</h1>
+      <h1>Welcome back.</h1>
       <p class="lead">
-        A clean control room for your tasks and categories. Build, filter, and
-        finish with confidence.
+        Your calm space for task planning. Sign in with GitHub to continue.
       </p>
-      <div class="hero-actions">
-        <button class="button primary" id="reload-button" type="button">
-          Refresh data
-        </button>
-        <span class="status" id="status-text">Ready.</span>
-      </div>
     </header>
 
-    <main class="layout">
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Tasks</h2>
-          <div class="filter">
-            <label for="task-filter">Filter</label>
-            <select id="task-filter"></select>
-          </div>
+    <main class="auth-layout">
+      <section class="auth-card">
+        <span class="badge">Secure login</span>
+        <h2>Sign in with GitHub</h2>
+        <p class="lead">
+          Use your GitHub account to unlock your task board and keep everything
+          in sync.
+        </p>
+        <div class="auth-actions">
+          <button class="button primary" id="github-login" type="button">
+            Continue with GitHub
+          </button>
         </div>
-
-        <form class="form" id="task-form">
-          <input type="hidden" id="task-id" />
-          <div class="field">
-            <label for="task-title">Title</label>
-            <input id="task-title" name="title" type="text" required />
-          </div>
-          <div class="field">
-            <label for="task-description">Description</label>
-            <textarea id="task-description" name="description" rows="3"></textarea>
-          </div>
-          <div class="field-group">
-            <div class="field">
-              <label for="task-category">Category</label>
-              <select id="task-category" name="categoryId"></select>
-            </div>
-            <div class="field field-inline">
-              <label class="checkbox">
-                <input id="task-complete" type="checkbox" />
-                <span>Completed</span>
-              </label>
-            </div>
-          </div>
-          <div class="form-actions">
-            <button class="button primary" type="submit" id="task-submit">
-              Save task
-            </button>
-            <button class="button ghost" type="button" id="task-reset">
-              Reset
-            </button>
-          </div>
-        </form>
-
-        <div class="list" id="task-list"></div>
+        <p class="status" id="login-status">Ready to sign in.</p>
       </section>
 
-      <section class="panel">
-        <div class="panel-header">
-          <h2>Categories</h2>
-          <p class="hint">Group work by theme and keep tasks aligned.</p>
+      <section class="auth-card subtle">
+        <h2>What you get</h2>
+        <div class="auth-list">
+          <div>Track tasks, categories, and progress in one space.</div>
+          <div>Sync across devices with secure GitHub OAuth.</div>
+          <div>Fast refresh, smooth filtering, zero clutter.</div>
         </div>
-
-        <form class="form" id="category-form">
-          <input type="hidden" id="category-id" />
-          <div class="field">
-            <label for="category-name">Name</label>
-            <input id="category-name" name="name" type="text" required />
-          </div>
-          <div class="form-actions">
-            <button class="button primary" type="submit" id="category-submit">
-              Save category
-            </button>
-            <button class="button ghost" type="button" id="category-reset">
-              Reset
-            </button>
-          </div>
-        </form>
-
-        <div class="list" id="category-list"></div>
       </section>
     </main>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-    <script src="/app.js" type="module"></script>
+    <script src="/login.js" type="module"></script>
   </body>
 </html>

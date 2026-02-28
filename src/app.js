@@ -24,6 +24,14 @@ app.get('/', (req, res) => {
 	res.sendFile(path.join(publicDir, 'index.html'));
 });
 
+app.get('/app', (req, res) => {
+	res.sendFile(path.join(publicDir, 'app.html'));
+});
+
+app.get('/oauth/callback', (req, res) => {
+	res.sendFile(path.join(publicDir, 'callback.html'));
+});
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/auth', authRoutes);

@@ -1,6 +1,7 @@
 const statusText = document.getElementById('status-text');
 const toast = document.getElementById('toast');
 const reloadButton = document.getElementById('reload-button');
+const logoutButton = document.getElementById('logout-button');
 
 const taskForm = document.getElementById('task-form');
 const taskIdInput = document.getElementById('task-id');
@@ -22,6 +23,34 @@ const apiBase = (document.querySelector('meta[name="api-base"]')?.content || '')
   .replace(/\/$/, '');
 const apiUrl = (path) => `${apiBase}${path}`;
 
+const tokenKeys = {
+  access: 'access_token',
+  refresh: 'refresh_token',
+  user: 'user_profile'
+};
+
+const getStoredTokens = () => ({
+  accessToken: localStorage.getItem(tokenKeys.access),
+  refreshToken: localStorage.getItem(tokenKeys.refresh)
+});
+
+const setTokens = ({ accessToken, refreshToken }) => {
+  if (accessToken) {
+    localStorage.setItem(tokenKeys.access, accessToken);
+  }
+  if (refreshToken) {
+    localStorage.setItem(tokenKeys.refresh, refreshToken);
+  }
+};
+
+const clearTokens = () => {
+  localStorage.removeItem(tokenKeys.access);
+  localStorage.removeItem(tokenKeys.refresh);
+  localStorage.removeItem(tokenKeys.user);
+};
+
+const isAuthenticated = () => Boolean(getStoredTokens().accessToken);
+
 const state = {
   categories: [],
   tasks: [],
@@ -38,14 +67,52 @@ const showToast = (message) => {
   window.setTimeout(() => toast.classList.remove('show'), 2200);
 };
 
+const refreshSession = async () => {
+  const { refreshToken } = getStoredTokens();
+  if (!refreshToken) {
+    throw new Error('Missing refresh token.');
+  }
+
+  const response = await fetch(apiUrl('/api/auth/refresh'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ refreshToken })
+  });
+
+  const payload = await response.json();
+  if (!response.ok) {
+    throw new Error(payload?.message || 'Session expired.');
+  }
+
+  setTokens(payload);
+  return payload;
+};
+
 const fetchJson = async (url, options = {}) => {
+  const { _retry, ...fetchOptions } = options;
+  const { accessToken } = getStoredTokens();
+
   const response = await fetch(url, {
-    ...options,
+    ...fetchOptions,
     headers: {
       'Content-Type': 'application/json',
-      ...(options.headers || {})
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      ...(fetchOptions.headers || {})
     }
   });
+
+  if (response.status === 401 && !_retry) {
+    try {
+      await refreshSession();
+      return fetchJson(url, { ...options, _retry: true });
+    } catch (error) {
+      clearTokens();
+      window.location.assign('/');
+      throw error;
+    }
+  }
 
   if (response.status === 204) {
     return null;
@@ -366,8 +433,19 @@ const handleCategoryListClick = async (event) => {
 };
 
 reloadButton.addEventListener('click', () => {
+  if (!isAuthenticated()) {
+    window.location.assign('/');
+    return;
+  }
   loadData().catch((error) => showToast(error.message));
 });
+
+if (logoutButton) {
+  logoutButton.addEventListener('click', () => {
+    clearTokens();
+    window.location.assign('/');
+  });
+}
 
 (taskForm).addEventListener('submit', handleTaskSubmit);
 categoryForm.addEventListener('submit', handleCategorySubmit);
@@ -383,7 +461,11 @@ taskFilter.addEventListener('change', (event) => {
   renderTasks();
 });
 
-loadData().catch((error) => {
-  showToast(error.message);
-  showStatus('Unable to load data.');
-});
+if (isAuthenticated()) {
+  loadData().catch((error) => {
+    showToast(error.message);
+    showStatus('Unable to load data.');
+  });
+} else {
+  showStatus('Sign in to continue.');
+}
