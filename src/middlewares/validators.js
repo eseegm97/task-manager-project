@@ -90,3 +90,12 @@ export const categoryUpdateValidator = [
 ];
 
 export const categoryIdParamValidator = [objectIdParam('id', 'Category id')];
+
+export const githubExchangeValidator = [
+  body('code').isString().notEmpty().withMessage('code is required.'),
+  body('codeVerifier').isString().notEmpty().withMessage('codeVerifier is required.')
+];
+
+export const refreshTokenValidator = [
+  body('refreshToken').isString().notEmpty().withMessage('refreshToken is required.')
+];

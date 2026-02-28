@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+import authRoutes from './routes/authRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/tasks', taskRoutes);
 
