@@ -220,6 +220,13 @@ export const refreshTokens = (req, res, next) => {
       tokenType: 'Bearer'
     });
   } catch (error) {
+    if (
+      error?.name === 'JsonWebTokenError' ||
+      error?.name === 'TokenExpiredError' ||
+      error?.name === 'NotBeforeError'
+    ) {
+      return res.status(401).json({ message: 'Invalid refresh token.' });
+    }
     return next(error);
   }
 };

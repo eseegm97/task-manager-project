@@ -57,6 +57,7 @@ const doc = {
 const outputFile = path.join(__dirname, 'swagger-output.json');
 const endpointsFiles = [
   path.join(__dirname, '../routes/index.js'),
+  path.join(__dirname, '../routes/authRoutes.js'),
   path.join(__dirname, '../routes/categoryRoutes.js'),
   path.join(__dirname, '../routes/taskRoutes.js'),
   path.join(__dirname, '../app.js')

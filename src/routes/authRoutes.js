@@ -7,6 +7,7 @@ import {
 import asyncHandler from '../middlewares/asyncHandler.js';
 import { handleValidationErrors } from '../middlewares/validation.js';
 import {
+  githubAuthorizeValidator,
   githubExchangeValidator,
   refreshTokenValidator
 } from '../middlewares/validators.js';
@@ -43,7 +44,12 @@ const router = Router();
  *       500:
  *         description: OAuth configuration error
  */
-router.get('/github/authorize', githubAuthorize);
+router.get(
+  '/github/authorize',
+  githubAuthorizeValidator,
+  handleValidationErrors,
+  githubAuthorize
+);
 
 /**
  * @openapi

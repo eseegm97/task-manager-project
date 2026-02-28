@@ -1,4 +1,4 @@
-import { body, param } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import { ObjectId } from 'mongodb';
 import { categoryExists } from '../models/categoryModel.js';
 
@@ -94,6 +94,14 @@ export const categoryIdParamValidator = [objectIdParam('id', 'Category id')];
 export const githubExchangeValidator = [
   body('code').isString().notEmpty().withMessage('code is required.'),
   body('codeVerifier').isString().notEmpty().withMessage('codeVerifier is required.')
+];
+
+export const githubAuthorizeValidator = [
+  query('code_challenge')
+    .isString()
+    .notEmpty()
+    .withMessage('code_challenge is required.'),
+  query('state').isString().notEmpty().withMessage('state is required.')
 ];
 
 export const refreshTokenValidator = [
