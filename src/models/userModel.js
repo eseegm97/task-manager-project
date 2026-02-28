@@ -28,5 +28,9 @@ export const upsertGithubUser = async ({
     { returnDocument: 'after', upsert: true }
   );
 
-  return result.value;
+  if (result?.value) {
+    return result.value;
+  }
+
+  return collection().findOne({ provider: 'github', providerUserId });
 };

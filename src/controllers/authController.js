@@ -155,6 +155,11 @@ export const githubExchange = async (req, res, next) => {
 
     const githubAccessToken = tokenData.access_token;
     const githubUser = await fetchGithubUser(githubAccessToken);
+    if (!githubUser?.id || !githubUser?.login) {
+      const error = new Error('GitHub profile is missing required fields.');
+      error.status = 502;
+      throw error;
+    }
     const email = githubUser.email || (await fetchGithubEmail(githubAccessToken));
 
     const user = await upsertGithubUser({
@@ -163,6 +168,12 @@ export const githubExchange = async (req, res, next) => {
       email,
       avatarUrl: githubUser.avatar_url
     });
+
+    if (!user?._id) {
+      const error = new Error('Unable to create or load the GitHub user.');
+      error.status = 502;
+      throw error;
+    }
 
     const { accessToken, refreshToken } = createTokens(
       user._id.toString(),
